@@ -9,16 +9,29 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from back import weather
+from PyQt5.QtWidgets import QMessageBox
+import win32api
+import webbrowser
 
+
+if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
+
+
+#Segoe Print , Segoe Script
 
 
 qss = '''
 
 QPushButton{
     background-color: rgb(255, 255, 255);
-	font: 12pt "MV Boli";
+	font: 12pt "Segoe Print";
 	color: rgb(0, 32, 96);
 	border-radius: 10px;
+	width: 120px;
+	height: 30px;
 
 }
 QPushButton:hover{
@@ -31,7 +44,7 @@ qss1 = '''
 
 QPushButton{
     background-color: rgb(255, 255, 255);
-	font: 12pt "MV Boli";
+	font: 12pt "Segoe Print";
 	color:  rgb(168, 168, 168);
 	border-radius: 10px;
 }
@@ -44,8 +57,7 @@ class Ui_Weather(object):
     def setupUi(self, Weather):
         Weather.setObjectName("Weather")
         Weather.resize(540, 680)
-        Weather.setStyleSheet("background-color: rgb(0, 32, 96);\n"
-"")
+        Weather.setStyleSheet("background-color: rgb(0, 32, 96);\n")
 
 
         #calla the back function
@@ -79,7 +91,7 @@ class Ui_Weather(object):
         self.Fecha = QtWidgets.QLabel(self.frameFecha)
         self.Fecha.setGeometry(QtCore.QRect(10, 20, 150, 111))
         self.Fecha.setAcceptDrops(True)
-        self.Fecha.setStyleSheet("font: 18pt \"MV Boli\";\n"
+        self.Fecha.setStyleSheet("font: 18pt \"Segoe Print\";\n"
 "color: rgb(0, 32, 96);")
         self.Fecha.setTextFormat(QtCore.Qt.AutoText)
         self.Fecha.setAlignment(QtCore.Qt.AlignCenter)
@@ -94,7 +106,7 @@ class Ui_Weather(object):
         self.fondo2.setObjectName("fondo2")
         self.actividad = QtWidgets.QLabel(self.fondo2)
         self.actividad.setGeometry(QtCore.QRect(20, 20, 391, 171))
-        self.actividad.setStyleSheet("font: 18pt \"MV Boli\";\n"
+        self.actividad.setStyleSheet("font: 18pt \"Segoe Print\";\n"
 "color: rgb(0, 32, 96);")
         self.actividad.setAlignment(QtCore.Qt.AlignCenter)
         self.actividad.setWordWrap(True)
@@ -118,19 +130,35 @@ class Ui_Weather(object):
         self.Next.setStyleSheet(qss)		
         
         self.Next.setObjectName("Next")
+
+
+
+
+        #Button accept
+        self.Accept = QtWidgets.QPushButton(self.fondo2)
+        self.Accept.setGeometry(QtCore.QRect(180, 210, 81, 31))
+        self.Accept.setStyleSheet(qss)		
+        
+        self.Next.setObjectName("Accept")
+
+
+
+
+
+
         self.Temp = QtWidgets.QLabel(self.fondo1)
         self.Temp.setGeometry(QtCore.QRect(100, 260, 81, 51))
-        self.Temp.setStyleSheet("font: 18pt \"MV Boli\";\n"
+        self.Temp.setStyleSheet("font: 18pt \"Segoe Print\";\n"
 "color: rgb(0, 32, 96);")
         self.Temp.setObjectName("Temp")
         self.City = QtWidgets.QLabel(self.fondo1)
         self.City.setGeometry(QtCore.QRect(60, 220, 181, 51))
-        self.City.setStyleSheet("font: 18pt \"MV Boli\";\n"
+        self.City.setStyleSheet("font: 18pt \"Segoe Print\";\n"
 "color: rgb(0, 32, 96);")
         self.City.setObjectName("City")
         self.Titulo = QtWidgets.QLabel(self.fondo1)
         self.Titulo.setGeometry(QtCore.QRect(100, 10, 301, 51))
-        self.Titulo.setStyleSheet("font: 25pt \"MV Boli\";\n"
+        self.Titulo.setStyleSheet("font: 25pt \"Segoe Print\";\n"
 "color: rgb(0, 32, 96);")
         self.Titulo.setObjectName("Titulo")
         Weather.setCentralWidget(self.centralwidget)
@@ -149,6 +177,7 @@ class Ui_Weather(object):
 
         self.Next.clicked.connect(self.clickNext)
         self.Previous.clicked.connect(self.clickPrevious)
+        self.Accept.clicked.connect(self.clickAccept)
 
 
 
@@ -168,6 +197,7 @@ class Ui_Weather(object):
         self.actividad.setText(_translate("Weather", activities[0]))
         self.Previous.setText(_translate("Weather", "Previous"))
         self.Next.setText(_translate("Weather", "Next"))
+        self.Accept.setText(_translate("Weather", "Accept"))
         self.Temp.setText(_translate("Weather", temperature))
         self.City.setText(_translate("Weather", location))
         self.Titulo.setText(_translate("Weather", "WeatherToMeet?"))
@@ -193,6 +223,52 @@ class Ui_Weather(object):
     	if self.counter == 0:
     		self.Previous.setEnabled(False)
     		self.Previous.setStyleSheet(qss1)
+
+
+    def clickAccept(self):
+    	texto = "Hey there!\nI got an awesome idea from “WeatherToMeet”. I am very happy to do this. What do you think about this proposal?" 
+    	msg = QMessageBox()
+    	msg.setWindowTitle("Hey there!")
+    	msg.setText(texto)
+    	msg.setStandardButtons(QMessageBox.Yes|QMessageBox.Close)
+
+    	buttonY = msg.button(QMessageBox.Yes)
+    	buttonY.setText("Invite friends")
+		
+
+    	msg.setInformativeText(self.activites[self.counter])
+    	msg.buttonClicked.connect(self.clickPopButton)
+    	
+    	msg.setStyleSheet(qss)
+    	msg.setStyleSheet("background-color: rgb(218, 227, 243);\n"
+		"border-radius: 20px;\n" 
+		"font: 18pt \"Segoe Print\";\n"
+		"color: rgb(0, 32, 96);")
+
+
+
+
+
+
+
+
+
+
+    	x = msg.exec_()
+
+
+    def clickPopButton(self, i):
+
+    	if i.text() == 'Invite friends':
+    		#Open Email
+    		#win32api.ShellExecute(0,'open','mailto:',None,None ,0)
+    		
+    		subject = "WeatherToMeet Activity"
+    		body = self.activites[self.counter]
+    		webbrowser.open('mailto:?to='  + '&subject=' + subject + '&body=' + body, new=1)
+    		
+
+
 
 
 
