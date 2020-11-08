@@ -264,7 +264,8 @@ class Ui_Weather(object):
     		#win32api.ShellExecute(0,'open','mailto:',None,None ,0)
     		
     		subject = "WeatherToMeet Activity"
-    		body = self.activites[self.counter]
+    		texto = "Hey there!\nI got an awesome idea from “WeatherToMeet”. I am very happy to do this. What do you think about this proposal?\n"
+    		body = texto + self.activites[self.counter]
     		webbrowser.open('mailto:?to='  + '&subject=' + subject + '&body=' + body, new=1)
     		
 

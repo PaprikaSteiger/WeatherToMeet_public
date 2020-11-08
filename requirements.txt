@@ -1,3 +1,4 @@
 PyQt5 == 5.12.3
 pyowm == 3.1.1
 geocoder == 1.38.1
+pypiwin32 == 223
